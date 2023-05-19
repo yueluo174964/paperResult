@@ -1,0 +1,144 @@
+  \\ \tau=2
+  for m in [5..10] do  \\ m循环赋值
+	H:=Open("hgL.txt","ab");  \\输出到文件hgL.txt
+	p:=3;  \\p赋值
+	d1:=1;  \\Trace((a1)^2)赋值
+	d2:=0;  \\Trace((a2)^2)赋值
+	u:=1;  \\u赋值
+	v1:=1;  \\v1赋值
+	v2:=1;  \\v2赋值
+	fprintf H,"(p,m)=(%o,%o)\n",p,m;
+	F<w>:=FiniteField(p^m);
+	FM:={x: x in F| x ne 0};
+	Fp := PrimeField(F);
+	NF := { f : f in F | f notin Fp };
+	B:=[w^i: i in [0..(m-1)]];
+	Include(~B,0);
+	for a1 in NF do
+	for a2 in NF do
+	if Trace((a1)^2) eq d1 and Trace((a2)^2) eq d2 and Trace((a1)*(a2)) eq 0 
+	and a1 notin {e1*a2 : e1 in Fp} then
+	D:={w*x: x in FM| Trace(x^2) eq u and Trace((a1)*x) eq v1 and Trace((a2)*x) eq v2};
+	M:=Matrix(Fp,(m+1),#D,[<1,1,0>]);  
+	i:=0;
+	for a in B do
+	i:=i+1;
+	j:=0;
+	for x in D do
+	j:=j+1;
+	M[i][j]:=Trace(a*x);
+	end for;
+	end for;
+	G:=LinearCode(M);
+	fprintf H, "(n,k,d)=(%o,%o,%o)\n",Length(G), Dimension(G), MinimumDistance(G);
+	fprintf H,"%o\n",WeightDistribution(G);
+	fprintf H, "(a1,a2)=(%o,%o)\n",a1,a2;
+	break a1;
+	end if;
+	end for;
+	end for;
+	delete H;
+	print "The End!";
+	end for;
+  
+  
+\\  \tau=3
+for m in [6..8] do
+H:=Open("hgl.txt","ab");
+p:=3;
+d1:=1;  \\Trace((a1)^2)赋值
+d2:=0;  \\Trace((a2)^2)赋值
+d3:=0;  \\Trace((a3)^2)赋值
+u:=1;  \\u赋值
+v1:=1;  \\v1赋值
+v2:=1;  \\v2赋值
+v3:=1;  \\v3赋值
+fprintf H,"(p,m)=(%o,%o)\n",p,m;
+F<w>:=FiniteField(p^m);
+Fp := PrimeField(F);
+FM:={x: x in F| x ne 0};
+NF := { f : f in F | f notin Fp };
+B:=[w^i: i in [0..(m-1)]];
+Include(~B,0);
+for a1 in NF do
+for a2 in NF do
+for a3 in NF do
+	if Trace((a1)^2) eq d1 and Trace((a2)^2) eq d2 and Trace((a3)^2) eq d3 and Trace((a1)*(a2)) eq 0 and Trace((a1)*(a3)) eq 0 and Trace((a2)*(a3)) eq 0 and 
+  a1 notin {e1*a2+e2*a3 : e1,e2 in Fp} and a2 notin {e*a3 : e in Fp} then
+		D:={w*x: x in FM| Trace(x^2) eq u and Trace((a1)*x) eq v1 and Trace((a2)*x) eq v2 and Trace((a3)*x) eq v3};
+		M:=Matrix(Fp,(m+1),#D,[<1,1,0>]);  
+		i:=0;
+		for a in B do
+			i:=i+1;
+			j:=0;
+			for x in D do
+			j:=j+1;
+			M[i][j]:=Trace(a*x);
+		end for;
+		end for;
+		G:=LinearCode(M);
+		fprintf H, "(n,k,d)=(%o,%o,%o)\n",Length(G),Dimension(G),MinimumDistance(G);
+		fprintf H,"%o\n",WeightDistribution(G);
+		fprintf H, "(a1,a2,a3)=(%o,%o,%o)\n",a1,a2,a3;
+		break a1;
+	end if;
+end for;
+end for;
+end for;
+delete H;
+print "The End!";
+end for;
+
+
+
+\\  \tau=4
+for m in [6..8] do
+H:=Open("hgl.txt","ab");
+p:=3;
+d1:=1;  \\Trace((a1)^2)赋值
+d2:=0;  \\Trace((a2)^2)赋值
+d3:=0;  \\Trace((a3)^2)赋值
+d4:=0;  \\Trace((a4)^2)赋值
+u:=1;  \\u赋值
+v1:=1;  \\v1赋值
+v2:=1;  \\v2赋值
+v3:=1;  \\v3赋值
+v4:=1;  \\v4赋值
+fprintf H,"(p,m)=(%o,%o)\n",p,m;
+F<w>:=FiniteField(p^m);
+FM:={x: x in F| x ne 0};
+Fp := PrimeField(F);
+NF := { f : f in F | f notin Fp };
+B:=[w^i: i in [0..(m-1)]];
+Include(~B,0);
+for a1 in NF do
+for a2 in NF do
+for a3 in NF do
+for a4 in NF do
+	if Trace((a1)^2) eq d1 and Trace((a2)^2) eq d2 and Trace((a3)^2) eq d3 and Trace((a4)^2) eq d4 and Trace((a1)*(a2)) eq 0 and Trace((a1)*(a3)) eq 0 
+  and Trace((a1)*(a4)) eq 0 and Trace((a2)*(a3)) eq 0 and Trace((a2)*(a4)) eq 0 and Trace((a3)*(a4)) eq 0 and a1 notin {e1*a2+e2*a3+e3*a4 : e1,e2,e3 in Fp} 
+  and a2 notin {e1*a3+e2*a4 : e1,e2 in Fp} and a3 notin {e1*a4 : e1 in Fp} then
+		D:={w*x: x in FM| Trace(x^2) eq u and Trace((a1)*x) eq v1 and Trace((a2)*x) eq v2 and Trace((a3)*x) eq v3 and Trace((a4)*x) eq v4};
+		M:=Matrix(Fp,(m+1),#D,[<1,1,0>]);  
+		i:=0;
+		for a in B do
+			i:=i+1;
+			j:=0;
+			for x in D do
+			j:=j+1;
+			M[i][j]:=Trace(a*x);
+		end for;
+		end for;
+		G:=LinearCode(M);
+		fprintf H,"(n,k,d)=(%o,%o,%o)\n",Length(G),Dimension(G),MinimumDistance(G);
+		fprintf H,"%o\n",WeightDistribution(G);
+		fprintf H, "(a1,a2,a3,a4)=(%o,%o,%o,%o)\n",a1,a2,a3,a4;
+		break a1;
+	end if;
+end for;
+end for;
+end for;
+end for;
+delete H;
+print "The End!";
+end for;
